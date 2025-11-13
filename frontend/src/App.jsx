@@ -1,19 +1,20 @@
-import React from 'react';
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
-import Navbar from './components/Header/Navbar.jsx'
-import HeroSection from './components/Home/HeroSection.jsx';  
-import ProductsPage from './components/Products/ProductsPage.jsx';
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+
+import Navbar from "./components/Header/Navbar"
+import HeroSection from "./components/Home/HeroSection"
+import ProductsPage from "./components/Products/ProductsPage"
 
 const App = () => {
   return (
-    <Router>
+    <>
       <Navbar />
-
       <Routes>
-        <Route path='/' element={<HeroSection />} />
-        <Route path="/products" element={<ProductsPage  />}/>
+        <Route path="/" element={<HeroSection />} />
+        <Route path="/products" element={<ProductsPage />} />
       </Routes>
-    </Router>
+    </>
   )
 }
-export default App;
+
+export default App

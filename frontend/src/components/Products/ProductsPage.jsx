@@ -1,34 +1,23 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import { fetchProducts } from "../../api/products";
+import { useQuery } from "@tanstack/react-query";
 
-const mockProducts = [
-  {
-    id: 1,
-    name: "Sony WF-1000XM4",
-    brand: "Sony",
-    price: 16990,
-    rating: 4.8,
-    image: "https://m.media-amazon.com/images/I/71x5xwF9F8L._SL1500_.jpg"
-  },
-  {
-    id: 2,
-    name: "Boat Airdopes 141",
-    brand: "boAt",
-    price: 1299,
-    rating: 4.3,
-    image: "https://m.media-amazon.com/images/I/61KNJav3S9L._SL1500_.jpg"
-  },
-  {
-    id: 3,
-    name: "JBL Tune 720BT",
-    brand: "JBL",
-    price: 3999,
-    rating: 4.4,
-    image: "https://m.media-amazon.com/images/I/612Z7gwbc7L._SL1500_.jpg"
-  }
-];
 
 const ProductsPage = () => {
+
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+    if (isLoading) {
+    return (
+      <div className="text-white pt-32 text-center">
+        Loading products...
+      </div>
+    );
+  }
+
   return (
     <section className="pt-32 px-6 min-h-screen bg-black text-white">
 
@@ -43,11 +32,10 @@ const ProductsPage = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-        {mockProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {products.map((product) => (
+          <ProductCard key={product.id || product._id} product={product} />
         ))}
       </div>
-
     </section>
   );
 };
