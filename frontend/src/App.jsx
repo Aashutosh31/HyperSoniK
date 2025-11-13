@@ -1,9 +1,11 @@
 import React from 'react'
-
+import Navbar from './components/Header/Navbar.jsx'
 const App = () => {
   return (
     <>
-      <h1 className='text-3xl font-bold text-center bg-blue-500 text-white p-4 rounded'>Hello, MERN Stack!</h1>
+    <Router>
+      <Navbar/>
+    </Router>
     </>
   )
 }
