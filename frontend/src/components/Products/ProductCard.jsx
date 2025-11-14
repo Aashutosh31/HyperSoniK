@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { AiFillStar } from "react-icons/ai";
+import {Link} from 'react-router-dom';
 
 // A default image in case a product has none
 import defaultHeadphone from "../../../public/headphones.png";
@@ -58,19 +59,18 @@ const ProductCard = ({ product }) => {
         <p className="mt-3 text-purple-400 font-semibold text-2xl">
           ₹{productPrice.toLocaleString("en-IN")}
         </p>
-
-        <a 
-          href={product.amazon?.url} 
+        <Link to={`/products/${product._id}`}>
+        <button
           target="_blank" 
           rel="noopener noreferrer"
           className="
             block text-center mt-4 w-full py-2 rounded-xl
             bg-gradient-to-r from-purple-600 to-blue-600
             text-white font-semibold hover:opacity-90 transition
-          "
-        >
-          View on Amazon
-        </a>
+          ">
+          Add to List
+        </button>
+        </Link>
       </div>
     </motion.div>
   );
