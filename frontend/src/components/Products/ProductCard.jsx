@@ -2,7 +2,25 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AiFillStar } from "react-icons/ai";
 
+// A default image in case a product has none
+import defaultHeadphone from "../../../public/headphones.png";
+
 const ProductCard = ({ product }) => {
+  
+  // FIX: Get the first image, or use a fallback if the images array is empty
+  const imageUrl = product.images && product.images.length > 0 
+    ? product.images[0] 
+    : defaultHeadphone;
+  
+  // FIX: Use 'title' from the schema, not 'name'
+  const productName = product.title || "No product name";
+  
+  // FIX: Use 'amazon.rating', not 'rating'
+  const productRating = product.amazon?.rating || 0;
+  
+  // FIX: Use 'bestPrice', not 'price'
+  const productPrice = product.bestPrice || 0;
+
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
@@ -10,32 +28,50 @@ const ProductCard = ({ product }) => {
       className="
         p-5 rounded-2xl bg-gradient-to-br from-[#0f0f17] to-[#171727]
         border border-white/10 shadow-xl hover:shadow-purple-700/30
-        transition-all cursor-pointer
+        transition-all cursor-pointer flex flex-col
       "
     >
       <div className="w-full h-48 rounded-xl overflow-hidden bg-black flex items-center justify-center">
-        <img src={product.image} alt={product.name} className="h-full object-cover" />
+        <img 
+          src={imageUrl} 
+          alt={productName} 
+          className="h-full w-full object-contain" // Use object-contain
+        />
       </div>
 
-      <h2 className="mt-4 text-xl font-semibold text-white">{product.name}</h2>
-      <p className="text-gray-400 text-sm">{product.brand}</p>
+      <div className="mt-4 flex flex-col flex-grow">
+        <h2 className="text-lg font-semibold text-white line-clamp-2" title={productName}>
+          {productName}
+        </h2>
+        <p className="text-gray-400 text-sm">{product.brand}</p>
 
-      <div className="mt-2 flex items-center gap-1">
-        <AiFillStar className="text-yellow-400" />
-        <span className="text-gray-300">{product.rating}</span>
+        <div className="mt-2 flex items-center gap-1">
+          <AiFillStar className="text-yellow-400" />
+          <span className="text-gray-300">{productRating}</span>
+          <span className="text-gray-500 text-sm">
+            ({product.amazon?.reviews || 0} reviews)
+          </span>
+        </div>
       </div>
 
-      <p className="mt-3 text-purple-400 font-semibold text-lg">₹{product.price}</p>
+      <div className="mt-auto pt-3">
+        <p className="mt-3 text-purple-400 font-semibold text-2xl">
+          ₹{productPrice.toLocaleString("en-IN")}
+        </p>
 
-      <button
-        className="
-          mt-4 w-full py-2 rounded-xl
-          bg-gradient-to-r from-purple-600 to-blue-600
-          text-white font-semibold hover:opacity-90 transition
-        "
-      >
-        Add to List
-      </button>
+        <a 
+          href={product.amazon?.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="
+            block text-center mt-4 w-full py-2 rounded-xl
+            bg-gradient-to-r from-purple-600 to-blue-600
+            text-white font-semibold hover:opacity-90 transition
+          "
+        >
+          View on Amazon
+        </a>
+      </div>
     </motion.div>
   );
 };
