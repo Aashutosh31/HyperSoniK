@@ -1,8 +1,9 @@
-import express from 'express';
-import { getAllProducts } from '../controllers/publicController.js';
+import express from "express";
+import { getProducts, manualRefreshController } from "../controllers/publicController.js";
+
 const router = express.Router();
 
-//Public Route
-router.get('/products', getAllProducts);
+router.get("/products", getProducts);
+router.get("/refresh-products", manualRefreshController);
 
 export default router;
