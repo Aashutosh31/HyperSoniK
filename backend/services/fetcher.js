@@ -1,4 +1,6 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 const AMAZON_HOST = process.env.AMAZON_HOST;
 const AMAZON_KEY = process.env.AMAZON_API_KEY;

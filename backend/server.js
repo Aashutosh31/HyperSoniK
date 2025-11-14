@@ -1,19 +1,18 @@
+import dotenv from "dotenv";
+dotenv.config(); // <-- MUST BE THE FIRST LINE
+
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import publicRoutes from "./routes/publicRoute.js";
-
-dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // DB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true, useUnifiedTopology: true
-}).then(() => {
+// (I also removed the deprecated mongoose options from my last suggestion)
+mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log("MongoDB Connected");
 }).catch(err => {
   console.error("MongoDB connection error:", err);

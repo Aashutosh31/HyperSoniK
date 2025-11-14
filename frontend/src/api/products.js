@@ -6,5 +6,6 @@ const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
 export const fetchProducts = async () => {
     const{data} = await axios.get(`${API_URL}/products`);
-    return data.products;
+    // FIX: The backend controller returns the array in `data.data`, not `data.products`
+    return data.data; 
 };
